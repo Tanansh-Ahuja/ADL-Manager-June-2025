@@ -31,145 +31,161 @@ namespace ADLManager
         /// </summary>
         private void InitializeComponent()
         {
-            mainGrid = new DataGridView();
-            tabControl1 = new TabControl();
-            tabPage1 = new TabPage();
-            del_btn = new Button();
-            add_btn = new Button();
-            Select = new DataGridViewCheckBoxColumn();
-            Sno = new DataGridViewTextBoxColumn();
-            feed = new DataGridViewComboBoxColumn();
-            adl = new DataGridViewComboBoxColumn();
-            createTab = new DataGridViewCheckBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)mainGrid).BeginInit();
-            tabControl1.SuspendLayout();
-            tabPage1.SuspendLayout();
-            SuspendLayout();
+            this.mainGrid = new System.Windows.Forms.DataGridView();
+            this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Sno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.feed = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.adl = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.createTab = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.MainTab = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.del_btn = new System.Windows.Forms.Button();
+            this.add_btn = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).BeginInit();
+            this.MainTab.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.SuspendLayout();
             // 
             // mainGrid
             // 
-            mainGrid.AllowUserToAddRows = false;
-            mainGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            mainGrid.Columns.AddRange(new DataGridViewColumn[] { Select, Sno, feed, adl, createTab });
-            mainGrid.Location = new Point(3, 2);
-            mainGrid.Margin = new Padding(3, 2, 3, 2);
-            mainGrid.Name = "mainGrid";
-            mainGrid.RowHeadersVisible = false;
-            mainGrid.RowHeadersWidth = 51;
-            mainGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            mainGrid.Size = new Size(520, 351);
-            mainGrid.TabIndex = 0;
-            mainGrid.CellValueChanged += mainGrid_CellValueChanged;
-            mainGrid.CurrentCellDirtyStateChanged += mainGrid_CurrentCellDirtyStateChanged;
-            // 
-            // tabControl1
-            // 
-            tabControl1.Controls.Add(tabPage1);
-            tabControl1.Location = new Point(10, 9);
-            tabControl1.Margin = new Padding(3, 2, 3, 2);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(623, 380);
-            tabControl1.TabIndex = 1;
-            // 
-            // tabPage1
-            // 
-            tabPage1.Controls.Add(del_btn);
-            tabPage1.Controls.Add(add_btn);
-            tabPage1.Controls.Add(mainGrid);
-            tabPage1.Location = new Point(4, 24);
-            tabPage1.Margin = new Padding(3, 2, 3, 2);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3, 2, 3, 2);
-            tabPage1.Size = new Size(615, 352);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "Main";
-            tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // del_btn
-            // 
-            del_btn.Location = new Point(528, 31);
-            del_btn.Margin = new Padding(3, 2, 3, 2);
-            del_btn.Name = "del_btn";
-            del_btn.Size = new Size(82, 22);
-            del_btn.TabIndex = 2;
-            del_btn.Text = "Delete Row";
-            del_btn.UseVisualStyleBackColor = true;
-            del_btn.Click += del_btn_Click;
-            // 
-            // add_btn
-            // 
-            add_btn.Location = new Point(528, 4);
-            add_btn.Margin = new Padding(3, 2, 3, 2);
-            add_btn.Name = "add_btn";
-            add_btn.Size = new Size(82, 22);
-            add_btn.TabIndex = 1;
-            add_btn.Text = "Add Row";
-            add_btn.UseVisualStyleBackColor = true;
-            add_btn.Click += add_btn_Click;
+            this.mainGrid.AllowUserToAddRows = false;
+            this.mainGrid.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.mainGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.mainGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Select,
+            this.Sno,
+            this.feed,
+            this.adl,
+            this.createTab});
+            this.mainGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainGrid.Location = new System.Drawing.Point(3, 2);
+            this.mainGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.mainGrid.Name = "mainGrid";
+            this.mainGrid.RowHeadersVisible = false;
+            this.mainGrid.RowHeadersWidth = 51;
+            this.mainGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.mainGrid.Size = new System.Drawing.Size(850, 765);
+            this.mainGrid.TabIndex = 0;
+            this.mainGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.mainGrid_CellValueChanged);
+            this.mainGrid.CurrentCellDirtyStateChanged += new System.EventHandler(this.mainGrid_CurrentCellDirtyStateChanged);
             // 
             // Select
             // 
-            Select.Frozen = true;
-            Select.HeaderText = "";
-            Select.MinimumWidth = 6;
-            Select.Name = "Select";
-            Select.Width = 50;
+            this.Select.Frozen = true;
+            this.Select.HeaderText = "";
+            this.Select.MinimumWidth = 6;
+            this.Select.Name = "Select";
+            this.Select.Width = 40;
             // 
             // Sno
             // 
-            Sno.Frozen = true;
-            Sno.HeaderText = "S No";
-            Sno.MinimumWidth = 6;
-            Sno.Name = "Sno";
-            Sno.ReadOnly = true;
-            Sno.Width = 125;
+            this.Sno.Frozen = true;
+            this.Sno.HeaderText = "S No";
+            this.Sno.MinimumWidth = 6;
+            this.Sno.Name = "Sno";
+            this.Sno.ReadOnly = true;
+            this.Sno.Width = 70;
             // 
             // feed
             // 
-            feed.HeaderText = "Feed";
-            feed.Items.AddRange(new object[] { "a", "EURUSD", "c", "d", "e" });
-            feed.MinimumWidth = 6;
-            feed.Name = "feed";
-            feed.Width = 125;
+            this.feed.HeaderText = "Feed";
+            this.feed.Items.AddRange(new object[] {
+            "a",
+            "EURUSD",
+            "c",
+            "d",
+            "e"});
+            this.feed.MinimumWidth = 6;
+            this.feed.Name = "feed";
+            this.feed.Width = 125;
             // 
             // adl
             // 
-            adl.HeaderText = "ADL";
-            adl.Items.AddRange(new object[] { "ADL #1", "Scalar 2_0", "ADL #3", "ADL #4" });
-            adl.MinimumWidth = 6;
-            adl.Name = "adl";
-            adl.Width = 125;
+            this.adl.HeaderText = "ADL";
+            this.adl.Items.AddRange(new object[] {
+            "connecting..."});
+            this.adl.MinimumWidth = 6;
+            this.adl.Name = "adl";
+            this.adl.Width = 125;
             // 
             // createTab
             // 
-            createTab.HeaderText = "Create Tab";
-            createTab.MinimumWidth = 6;
-            createTab.Name = "createTab";
-            createTab.Width = 125;
+            this.createTab.HeaderText = "Create Tab";
+            this.createTab.MinimumWidth = 6;
+            this.createTab.Name = "createTab";
+            this.createTab.Width = 125;
+            // 
+            // MainTab
+            // 
+            this.MainTab.Controls.Add(this.tabPage1);
+            this.MainTab.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainTab.Location = new System.Drawing.Point(0, 0);
+            this.MainTab.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MainTab.Name = "MainTab";
+            this.MainTab.SelectedIndex = 0;
+            this.MainTab.Size = new System.Drawing.Size(864, 798);
+            this.MainTab.TabIndex = 1;
+            this.MainTab.SelectedIndexChanged += new System.EventHandler(this.MainTab_SelectedIndexChanged);
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.del_btn);
+            this.tabPage1.Controls.Add(this.add_btn);
+            this.tabPage1.Controls.Add(this.mainGrid);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage1.Size = new System.Drawing.Size(856, 769);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Main";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // del_btn
+            // 
+            this.del_btn.Location = new System.Drawing.Point(677, 43);
+            this.del_btn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.del_btn.Name = "del_btn";
+            this.del_btn.Size = new System.Drawing.Size(124, 34);
+            this.del_btn.TabIndex = 2;
+            this.del_btn.Text = "Delete Row";
+            this.del_btn.UseVisualStyleBackColor = true;
+            this.del_btn.Click += new System.EventHandler(this.del_btn_Click);
+            // 
+            // add_btn
+            // 
+            this.add_btn.Location = new System.Drawing.Point(677, 6);
+            this.add_btn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.add_btn.Name = "add_btn";
+            this.add_btn.Size = new System.Drawing.Size(124, 31);
+            this.add_btn.TabIndex = 1;
+            this.add_btn.Text = "Add Row";
+            this.add_btn.UseVisualStyleBackColor = true;
+            this.add_btn.Click += new System.EventHandler(this.add_btn_Click);
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(642, 406);
-            Controls.Add(tabControl1);
-            Margin = new Padding(3, 2, 3, 2);
-            MaximumSize = new Size(658, 445);
-            MinimumSize = new Size(658, 445);
-            Name = "Form1";
-            Text = "Form1";
-            Load += Form1_Load;
-            ((System.ComponentModel.ISupportInitialize)mainGrid).EndInit();
-            tabControl1.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(864, 798);
+            this.Controls.Add(this.MainTab);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MinimumSize = new System.Drawing.Size(749, 468);
+            this.Name = "Form1";
+            this.Text = "Control ADL";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).EndInit();
+            this.MainTab.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
 
         private DataGridView mainGrid;
-        private TabControl tabControl1;
+        private TabControl MainTab;
         private TabPage tabPage1;
         private Button add_btn;
         private Button del_btn;

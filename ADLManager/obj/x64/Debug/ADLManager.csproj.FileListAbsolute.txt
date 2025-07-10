@@ -30,3 +30,36 @@ C:\Users\tanan\OneDrive\Desktop\akash formal work\june-project-new-form\ADLManag
 C:\Users\tanan\OneDrive\Desktop\akash formal work\june-project-new-form\ADLManager\ADLManager\obj\x64\Debug\ADLManager.csproj.Up2Date
 C:\Users\tanan\OneDrive\Desktop\akash formal work\june-project-new-form\ADLManager\ADLManager\obj\x64\Debug\ADLManager.exe
 C:\Users\tanan\OneDrive\Desktop\akash formal work\june-project-new-form\ADLManager\ADLManager\obj\x64\Debug\ADLManager.pdb
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\ADLManager.exe.config
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\ADLManager.exe
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\ADLManager.pdb
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\core-wrapper.dll
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\Google.Protobuf.dll
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\Google.ProtocolBuffers.dll
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\Google.ProtocolBuffers.Serialization.dll
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\Newtonsoft.Json.dll
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\System.Buffers.dll
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\System.Memory.dll
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\System.Numerics.Vectors.dll
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\TimeZoneConverter.dll
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\tt-net-api.dll
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\Google.Protobuf.pdb
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\Google.Protobuf.xml
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\Google.ProtocolBuffers.xml
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\Google.ProtocolBuffers.Serialization.xml
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\Newtonsoft.Json.xml
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\System.Buffers.xml
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\System.Memory.xml
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\System.Numerics.Vectors.xml
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\bin\x64\Debug\TimeZoneConverter.xml
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\obj\x64\Debug\ADLManager.csproj.AssemblyReference.cache
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\obj\x64\Debug\ADLManager.exe.config
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\obj\x64\Debug\ADLManager.Form1.resources
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\obj\x64\Debug\ADLManager.Properties.Resources.resources
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\obj\x64\Debug\ADLManager.csproj.GenerateResource.cache
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\obj\x64\Debug\ADLManager.csproj.CoreCompileInputs.cache
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\obj\x64\Debug\ADLManager.csproj.Up2Date
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\obj\x64\Debug\ADLManager.exe
+D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\obj\x64\Debug\ADLManager.pdb
