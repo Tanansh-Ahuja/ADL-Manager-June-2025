@@ -27,7 +27,7 @@ namespace ADLManager
                 // Add your app secret Key here. It looks like: 00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000
 
                 //Sim
-                string appSecretKey = "a020b041-fbe2-fdca-d098-a93421779bba:bd3d8014-c55d-fc72-1205-95578f326993"; // own key
+                string appSecretKey = ""; // own key
 
 
                 tt_net_sdk.ServiceEnvironment environment = tt_net_sdk.ServiceEnvironment.UatCert;
