@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using tt_net_sdk;
+using System.IO;
 
 namespace ADLManager
 {
@@ -21,6 +22,7 @@ namespace ADLManager
         string columnFourName = "createTab";
 
         // Declare the API objects
+        private string _appSecretKey;
         private TTAPI m_api = null;
         private ManualResetEvent mre = new ManualResetEvent(false);
         private tt_net_sdk.WorkerDispatcher m_disp = null;
@@ -44,10 +46,11 @@ namespace ADLManager
         private List<int> selectedRowIndexList = new List<int>();
         Dictionary<string, object> algo_userparams = new Dictionary<string, object>();
 
-        public Form1()
+        public Form1(string appSecretKey)
         {
             InitializeComponent();
             MainTab.Hide();
+            _appSecretKey = appSecretKey;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -86,6 +89,14 @@ namespace ADLManager
             if (ex == null)
             {
                 Console.WriteLine("TT.NET SDK INITIALIZED");
+                try
+                {
+                    File.WriteAllText("key.txt", _appSecretKey);
+                }
+                catch (Exception fileEx)
+                {
+                    MessageBox.Show($"Connected, but failed to save key: {fileEx.Message}", "File Save Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
 
                 // Authenticate your credentials
                 m_api = api;
@@ -227,14 +238,14 @@ namespace ADLManager
                 Console.WriteLine($"{kvp.Key} : {kvp.Value}");
             }
 
-            //OrderProfile algo_op = m_algo.GetOrderProfile(m_instrument);
+            OrderProfile algo_op = m_algo.GetOrderProfile();
 
-            //algo_op.OrderQuantity = Quantity.FromDecimal(m_instrument, 5); ;
-            //algo_op.Side = OrderSide.Buy;
-            //algo_op.OrderType = OrderType.Limit;
-            //algo_op.Account = m_accounts.ElementAt(0);
-            //algo_op.UserParameters = algo_userparams;
-            //m_algoTradeSubscription.SendOrder(algo_op);
+            algo_op.OrderQuantity = Quantity.FromDecimal(m_instrument, 5); ;
+            algo_op.Side = OrderSide.Buy;
+            algo_op.OrderType = OrderType.Limit;
+            algo_op.Account = m_accounts.ElementAt(0);
+            algo_op.UserParameters = algo_userparams;
+            m_algoTradeSubscription.SendOrder(algo_op);
         }
 
         #region ADL events

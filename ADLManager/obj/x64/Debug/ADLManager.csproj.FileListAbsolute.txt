@@ -63,3 +63,4 @@ D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\obj\x64\Debug\ADLMana
 D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\obj\x64\Debug\ADLManager.csproj.Up2Date
 D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\obj\x64\Debug\ADLManager.exe
 D:\SkyMax\Current project\ADLManager\ADLManager\ADLManager\obj\x64\Debug\ADLManager.pdb
+C:\Users\tanan\OneDrive\Desktop\akash formal work\june-project-new-form\ADLManager\ADLManager\obj\x64\Debug\ADLManager.SecretKeyForm.resources
