@@ -523,6 +523,8 @@ namespace ADLManager
             paramGrid.DefaultCellStyle.SelectionForeColor = paramGrid.DefaultCellStyle.ForeColor;
 
             paramGrid.Columns.Add("ParamName", "Parameter Name");
+            paramGrid.Columns["ParamName"].ReadOnly = true;
+            paramGrid.Columns["ParamName"].DefaultCellStyle.BackColor = Color.LightGray;
             paramGrid.Columns.Add("Value", "Value");
 
             if (adlParameters.ContainsKey(adlValue))
