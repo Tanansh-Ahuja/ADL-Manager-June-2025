@@ -45,6 +45,20 @@ namespace ADLManager
             this.MainTab.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
+            this.mainGrid = new System.Windows.Forms.DataGridView();
+            this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Sno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.feed = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.adl = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.createTab = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.MainTab = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.del_btn = new System.Windows.Forms.Button();
+            this.add_btn = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).BeginInit();
+            this.MainTab.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.SuspendLayout();
             // 
             // mainGrid
             // 
@@ -76,9 +90,20 @@ namespace ADLManager
             this.Select.MinimumWidth = 6;
             this.Select.Name = "Select";
             this.Select.Width = 40;
+            this.Select.Frozen = true;
+            this.Select.HeaderText = "";
+            this.Select.MinimumWidth = 6;
+            this.Select.Name = "Select";
+            this.Select.Width = 40;
             // 
             // Sno
             // 
+            this.Sno.Frozen = true;
+            this.Sno.HeaderText = "S No";
+            this.Sno.MinimumWidth = 6;
+            this.Sno.Name = "Sno";
+            this.Sno.ReadOnly = true;
+            this.Sno.Width = 70;
             this.Sno.Frozen = true;
             this.Sno.HeaderText = "S No";
             this.Sno.MinimumWidth = 6;
@@ -98,9 +123,25 @@ namespace ADLManager
             this.feed.MinimumWidth = 6;
             this.feed.Name = "feed";
             this.feed.Width = 125;
+            this.feed.HeaderText = "Feed";
+            this.feed.Items.AddRange(new object[] {
+            "a",
+            "EURUSD",
+            "c",
+            "d",
+            "e"});
+            this.feed.MinimumWidth = 6;
+            this.feed.Name = "feed";
+            this.feed.Width = 125;
             // 
             // adl
             // 
+            this.adl.HeaderText = "ADL";
+            this.adl.Items.AddRange(new object[] {
+            "connecting..."});
+            this.adl.MinimumWidth = 6;
+            this.adl.Name = "adl";
+            this.adl.Width = 125;
             this.adl.HeaderText = "ADL";
             this.adl.Items.AddRange(new object[] {
             "connecting..."});
@@ -185,6 +226,7 @@ namespace ADLManager
         #endregion
 
         private DataGridView mainGrid;
+        private TabControl MainTab;
         private TabControl MainTab;
         private TabPage tabPage1;
         private Button add_btn;

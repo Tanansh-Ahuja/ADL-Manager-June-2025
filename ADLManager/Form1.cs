@@ -28,13 +28,24 @@ namespace ADLManager
         private tt_net_sdk.WorkerDispatcher m_disp = null;
         private AlgoTradeSubscription m_algoTradeSubscription = null;
         //private AlgoLookupSubscription m_algoLookupSubscription = null;
+        //private AlgoLookupSubscription m_algoLookupSubscription = null;
         private IReadOnlyCollection<Account> m_accounts = null;
         private Algo m_algo = null;
+        //private object m_Lock = new object();
+        //private bool m_isDisposed = false;
         //private object m_Lock = new object();
         //private bool m_isDisposed = false;
         private Instrument m_instrument = null;
 
 
+        private List<string> adlAlgoNames = new List<string> {
+                                                                  "MET_ScalarBias_2_0",
+                                                                  //"MET_ScalarBias_2_1",
+                                                                  //"alert_test"
+                                                              };
+        private int ADLAlgosFound = 0;
+
+        private Dictionary<string, List<(string paramName, string paramType)>> adlParameters = new Dictionary<string, List<(string, string)>>();
         private List<string> adlAlgoNames = new List<string> {
                                                                   "MET_ScalarBias_2_0",
                                                                   //"MET_ScalarBias_2_1",
@@ -162,6 +173,19 @@ namespace ADLManager
         #endregion
 
         #region Instrument and ADL lookup
+            foreach (var algoName in adlAlgoNames)
+            {
+                Console.WriteLine("Algo name: {0}", algoName);
+                var algoLookupSubscription = new AlgoLookupSubscription(tt_net_sdk.Dispatcher.Current, algoName);
+                algoLookupSubscription.OnData += AlgoLookupSubscription_OnData;
+                algoLookupSubscription.GetAsync();
+            }
+
+        }
+
+        #endregion
+
+        #region Instrument and ADL lookup
 
         void m_instrLookupRequest_OnData(object sender, InstrumentLookupEventArgs e)
         {
@@ -183,6 +207,7 @@ namespace ADLManager
             }
         }
        
+       
         private void AlgoLookupSubscription_OnData(object sender, AlgoLookupEventArgs e)
         {
             if (e.Event == ProductDataEvent.Found)
@@ -192,8 +217,12 @@ namespace ADLManager
                 string algoName = e.AlgoLookup.Algo.Alias;
 
                 var paramList = new List<(string paramName, string paramType)>();
+                string algoName = e.AlgoLookup.Algo.Alias;
+
+                var paramList = new List<(string paramName, string paramType)>();
 
 
+                foreach (var item in e.AlgoLookup.Algo.AlgoParameters)
                 foreach (var item in e.AlgoLookup.Algo.AlgoParameters)
                 {
                     string type;
@@ -213,7 +242,27 @@ namespace ADLManager
                 lock (adlParameters) 
                 {
                     adlParameters[algoName] = paramList;
+                    string type;
+                    if (item.Type == "Int_t")
+                        type = "int";
+                    else if (item.Type == "Float_t")
+                        type = "float";
+                    else if (item.Type == "String_t")
+                        type = "string";
+                    else if (item.Type == "Boolean_t")
+                        type = "bool";
+                    else
+                        type = "string"; // fallback default
+
+                    paramList.Add((item.Name, type));
                 }
+                lock (adlParameters) 
+                {
+                    adlParameters[algoName] = paramList;
+                }
+
+                UpdateAdlDropdownSource();
+                
 
                 UpdateAdlDropdownSource();
                 
@@ -246,9 +295,37 @@ namespace ADLManager
                 Console.WriteLine("Not Allowed : Please check your Token access");
             }
             else if (e.Event == ProductDataEvent.NotFound)    
+            else if (e.Event == ProductDataEvent.NotFound)    
             {
                 // Algo Instrument was not found and TT API has given up looking for it
                 Console.WriteLine("Cannot find Algo instrument: {0}", e.Message);
+            }
+        }
+
+        #endregion
+
+        void StartAlgo()
+        {
+            while (m_algo == null)
+                mre.WaitOne();
+
+            foreach (KeyValuePair<string, object> kvp in algo_userparams)
+            {
+                Console.WriteLine($"{kvp.Key} : {kvp.Value}");
+            }
+
+            //OrderProfile algo_op = m_algo.GetOrderProfile(m_instrument);
+
+            //algo_op.OrderQuantity = Quantity.FromDecimal(m_instrument, 5); ;
+            //algo_op.Side = OrderSide.Buy;
+            //algo_op.OrderType = OrderType.Limit;
+            //algo_op.Account = m_accounts.ElementAt(0);
+            //algo_op.UserParameters = algo_userparams;
+            //m_algoTradeSubscription.SendOrder(algo_op);
+        }
+
+        #region ADL events
+
             }
         }
 
@@ -340,6 +417,7 @@ namespace ADLManager
             }
         }
 
+        #endregion
         #endregion
 
         public void TTAPI_ShutdownCompleted(object sender, EventArgs e)
@@ -438,10 +516,13 @@ namespace ADLManager
 
             var curr_index = 0;
             for (int i = MainTab.TabPages.Count - 1; i > 0; i--)
+            for (int i = MainTab.TabPages.Count - 1; i > 0; i--)
             {
+                curr_index = int.Parse(MainTab.TabPages[i].Text);
                 curr_index = int.Parse(MainTab.TabPages[i].Text);
                 if (map.ContainsKey(curr_index))
                 {
+                    MainTab.TabPages[i].Text = map[curr_index].ToString();
                     MainTab.TabPages[i].Text = map[curr_index].ToString();
                 }
             }
@@ -501,7 +582,9 @@ namespace ADLManager
                 {
                     string serial = row.Cells[columnOneName].Value.ToString();
                     for (int i = MainTab.TabPages.Count - 1; i > 0; i--)
+                    for (int i = MainTab.TabPages.Count - 1; i > 0; i--)
                     {
+                        if (MainTab.TabPages[i].Text == serial)
                         if (MainTab.TabPages[i].Text == serial)
                         {
                             MainTab.TabPages.RemoveAt(i);
@@ -519,6 +602,7 @@ namespace ADLManager
 
         private bool TabExists(string serial)
         {
+            return MainTab.TabPages.Cast<TabPage>().Any(tab => tab.Text == serial);
             return MainTab.TabPages.Cast<TabPage>().Any(tab => tab.Text == serial);
         }
 
@@ -587,6 +671,7 @@ namespace ADLManager
                 Left = 20,
                 Top = 60,
                 Width = 400,
+                Height = 500,
                 Height = 500,
                 AllowUserToAddRows = false,
                 RowHeadersVisible = false,
