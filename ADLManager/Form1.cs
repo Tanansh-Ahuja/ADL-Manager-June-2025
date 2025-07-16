@@ -239,10 +239,28 @@ namespace ADLManager
             while (m_algo == null)
                 mre.WaitOne();
 
-            foreach (KeyValuePair<string, object> kvp in algo_userparams)
+            if(currentTab != null)
             {
-                Console.WriteLine($"{kvp.Key} : {kvp.Value}");
+                DataGridView paramGrid = tabParamGrids[currentTab]; // replace with your actual key
+
+                foreach (DataGridViewRow row in paramGrid.Rows)
+                {
+                    if (row.IsNewRow) continue; // skip new blank row
+
+                    string paramName = row.Cells["ParamName"].Value?.ToString();
+                    object paramValue = row.Cells["Value"].Value;
+
+                    if (!string.IsNullOrWhiteSpace(paramName))
+                    {
+                        algo_userparams[paramName] = paramValue;
+                    }
+                }
+                foreach (KeyValuePair<string, object> kvp in algo_userparams)
+                {
+                    Console.WriteLine($"{kvp.Key} : {kvp.Value}");
+                }
             }
+
 
             OrderProfile algo_op = m_algo.GetOrderProfile();
 
@@ -726,6 +744,7 @@ namespace ADLManager
                 }
             }
         }
+        
         private void NumericKeyPressHandler(object sender, KeyPressEventArgs e)
         {
             TextBox tb = sender as TextBox;
@@ -761,6 +780,7 @@ namespace ADLManager
                 e.Handled = false;
             }
         }
+        
         private string GetCurrentParamType(int rowIndex, DataGridView dgv)
         {
             // First column is parameter name, we use that to find the type from dictionary
@@ -768,6 +788,7 @@ namespace ADLManager
 
             // Each tab has the ADL name in its header
             string adlName = MainTab.SelectedTab?.Text;
+            
             if (adlParameters.ContainsKey(adlName))
             {
                 foreach (var (name, type) in adlParameters[adlName])
@@ -813,16 +834,21 @@ namespace ADLManager
             if (paramGrid.Columns[e.ColumnIndex].Name == "Value")
             {
                 string input = e.FormattedValue.ToString();
-                string expectedType = paramGrid.Rows[e.RowIndex].Cells["ParamName"].Value?.ToString();
-
-                // If you're storing type in another column (say Tag or ParamType), fetch it that way
-                string typeHint = adlParameters[currentADLName][e.RowIndex].paramType; // Example
-
-                if (!IsValidInput(input, typeHint))
+                if(input.Length != 0)
                 {
-                    MessageBox.Show($"Invalid input for type {typeHint}", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    e.Cancel = true; // Prevent leaving the cell
+                    string expectedType = paramGrid.Rows[e.RowIndex].Cells["ParamName"].Value?.ToString();
+
+                    // If you're storing type in another column (say Tag or ParamType), fetch it that way
+                    string typeHint = adlParameters[currentADLName][e.RowIndex].paramType; // Example
+
+                    if (!IsValidInput(input, typeHint))
+                    {
+                        MessageBox.Show($"Invalid input for type {typeHint}", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        e.Cancel = true; // Prevent leaving the cell
+                    }
+
                 }
+                
             }
         }
 

@@ -37,16 +37,17 @@ namespace ADLManager
             // 
             // txtKey
             // 
-            this.txtKey.Location = new System.Drawing.Point(25, 40);
+            this.txtKey.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txtKey.Location = new System.Drawing.Point(28, 34);
             this.txtKey.Name = "txtKey";
-            this.txtKey.Size = new System.Drawing.Size(522, 22);
+            this.txtKey.Size = new System.Drawing.Size(852, 30);
             this.txtKey.TabIndex = 0;
             // 
             // btnSubmit
             // 
-            this.btnSubmit.Location = new System.Drawing.Point(252, 68);
+            this.btnSubmit.Location = new System.Drawing.Point(437, 79);
             this.btnSubmit.Name = "btnSubmit";
-            this.btnSubmit.Size = new System.Drawing.Size(75, 23);
+            this.btnSubmit.Size = new System.Drawing.Size(75, 30);
             this.btnSubmit.TabIndex = 1;
             this.btnSubmit.Text = "Submit";
             this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
@@ -64,7 +65,7 @@ namespace ADLManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(578, 130);
+            this.ClientSize = new System.Drawing.Size(938, 135);
             this.Controls.Add(this.txtKey);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.lblPrompt);
