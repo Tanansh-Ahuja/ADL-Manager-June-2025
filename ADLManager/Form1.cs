@@ -42,9 +42,14 @@ namespace ADLManager
                                                               };
         private int ADLAlgosFound = 0;
 
+        private string currentTab = null;
+        private string currentADLName = null;
         private Dictionary<string, List<(string paramName, string paramType)>> adlParameters = new Dictionary<string, List<(string, string)>>();
         private List<int> selectedRowIndexList = new List<int>();
         Dictionary<string, object> algo_userparams = new Dictionary<string, object>();
+        private Dictionary<string, DataGridView> tabParamGrids = new Dictionary<string, DataGridView>();
+        private Dictionary<string, string> tabAdlMapping = new Dictionary<string, string>();
+
 
         public Form1(string appSecretKey)
         {
@@ -57,6 +62,7 @@ namespace ADLManager
         {
             mainGrid.DefaultCellStyle.SelectionBackColor = mainGrid.DefaultCellStyle.BackColor;
             mainGrid.DefaultCellStyle.SelectionForeColor = mainGrid.DefaultCellStyle.ForeColor;
+            MainTab.SelectedIndexChanged += MainTab_SelectedIndexChanged;
             add_btn.Enabled = false;
             add_btn.Text = "Loading ADL";
         }
@@ -340,6 +346,33 @@ namespace ADLManager
             add_btn.Text = "Add Row";
         }
 
+        private void MainTab_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedTab = MainTab.SelectedTab;
+            if (selectedTab != null)
+            {
+                string tabName = selectedTab.Text;
+
+                if (tabName == "main")
+                {
+                    currentTab = null;
+                    currentADLName = null;
+                }
+                else if (tabAdlMapping.ContainsKey(tabName))
+                {
+                    currentTab = tabName;
+                    currentADLName = tabAdlMapping[tabName];
+                }
+                else
+                {
+                    currentTab = null;
+                    currentADLName = null;  // Fallback safety
+                }
+
+                Console.WriteLine($"Current ADL: {currentADLName ?? "None"}");
+            }
+        }
+
         private void del_btn_Click(object sender, EventArgs e)
         {
             if (selectedRowIndexList.Count == 0) return;
@@ -356,18 +389,66 @@ namespace ADLManager
             selectedRowIndexList.Clear();
 
 
-            Dictionary<int, int> map = new Dictionary<int, int>();
+            Dictionary<string, string> map = new Dictionary<string, string>();
             //         old,new
 
             for (int i = mainGrid.Rows.Count - 1; i >= 0; i--)
             {
-                map[(int)mainGrid.Rows[i].Cells[columnOneName].Value] = i + 1;
-                mainGrid.Rows[i].Cells[columnOneName].Value = i + 1;
+                int x = i + 1;
+                map[mainGrid.Rows[i].Cells[columnOneName].Value.ToString()] = x.ToString();
+                mainGrid.Rows[i].Cells[columnOneName].Value = x.ToString();
+
+
             }
-            var curr_index = 0;
+            Dictionary<string, DataGridView> temp_paramGrid = new Dictionary<string, DataGridView>();
+            foreach (KeyValuePair<string, DataGridView> entry in tabParamGrids)
+            {
+                string old_key = entry.Key;
+                if(map.ContainsKey(old_key))
+                {
+                    string new_key = map[old_key];
+                    temp_paramGrid[new_key] = entry.Value;
+                }
+                
+            }
+            tabParamGrids.Clear();
+            tabParamGrids = temp_paramGrid.ToDictionary(
+                                entry => entry.Key,
+                                entry => entry.Value // still shallow copy of value
+                            );
+            temp_paramGrid.Clear();
+
+            Dictionary<string, string> temp_ADLmap= new Dictionary<string, string>();
+            foreach (KeyValuePair<string, string> entry in tabAdlMapping)
+            {
+                string old_key = entry.Key;
+                if( map.ContainsKey(old_key))
+                {
+                    string new_key = map[old_key];
+                    temp_ADLmap[new_key] = entry.Value;
+                }
+                
+            }
+            tabAdlMapping.Clear();
+            tabAdlMapping = temp_ADLmap.ToDictionary(
+                                entry => entry.Key,
+                                entry => entry.Value // still shallow copy of value
+                            );
+            temp_ADLmap.Clear();
+
+            foreach (KeyValuePair<string, string> entry in tabAdlMapping)
+            {
+                Console.WriteLine($"Key: {entry.Key}, Value: {entry.Value}");
+            }
+            foreach (KeyValuePair<string, DataGridView> entry in tabParamGrids)
+            {
+                Console.WriteLine($"Key: {entry.Key}, Value: {entry.Value}");
+            }
+
+            string curr_index = null;
             for (int i = MainTab.TabPages.Count - 1; i > 0; i--)
             {
-                curr_index = int.Parse(MainTab.TabPages[i].Text);
+                curr_index = MainTab.TabPages[i].Text.ToString();
                 if (map.ContainsKey(curr_index))
                 {
                     MainTab.TabPages[i].Text = map[curr_index].ToString();
@@ -421,13 +502,15 @@ namespace ADLManager
 
                     string serial = row.Cells[columnOneName].Value.ToString();
                     if (!TabExists(serial))
-                    {
+                    {   
                         CreateTabWithLabels(serial, feedValue, adlValue);
                     }
                 }
                 else
                 {
                     string serial = row.Cells[columnOneName].Value.ToString();
+                    tabAdlMapping.Remove(serial);
+                    tabParamGrids.Remove(serial);
                     for (int i = MainTab.TabPages.Count - 1; i > 0; i--)
                     {
                         if (MainTab.TabPages[i].Text == serial)
@@ -497,6 +580,7 @@ namespace ADLManager
                 Top = 30,
                 AutoSize = true
             };
+            tabAdlMapping[serial] = adlValue;
 
             newTab.Controls.Add(lblFeedTitle);
             newTab.Controls.Add(lblFeedValue);
@@ -521,11 +605,13 @@ namespace ADLManager
 
             paramGrid.DefaultCellStyle.SelectionBackColor = paramGrid.DefaultCellStyle.BackColor;
             paramGrid.DefaultCellStyle.SelectionForeColor = paramGrid.DefaultCellStyle.ForeColor;
-
+            paramGrid.CellValidating += ParamGrid_CellValidating;
             paramGrid.Columns.Add("ParamName", "Parameter Name");
             paramGrid.Columns["ParamName"].ReadOnly = true;
             paramGrid.Columns["ParamName"].DefaultCellStyle.BackColor = Color.LightGray;
             paramGrid.Columns.Add("Value", "Value");
+
+            tabParamGrids[serial] = paramGrid;
 
             if (adlParameters.ContainsKey(adlValue))
             {
@@ -692,6 +778,55 @@ namespace ADLManager
             }
             return "string"; // fallback
         }
+
+        private bool IsValidInput(string input, string expectedType)
+        {
+            switch (expectedType.ToLower())
+            {
+                case "int":
+                case "int_t":
+                    return int.TryParse(input, out _);
+
+                case "float":
+                case "float_t":
+                    // Only 1 decimal point allowed
+                    if (input.Count(c => c == '.') > 1)
+                        return false;
+                    return float.TryParse(input, out _);
+
+                case "string":
+                case "string_t":
+                    return true; // Any input is valid
+
+                case "bool":
+                case "boolean_t":
+                    return input.Equals("true", StringComparison.OrdinalIgnoreCase) ||
+                           input.Equals("false", StringComparison.OrdinalIgnoreCase);
+
+                default:
+                    return false;
+            }
+        }
+        private void ParamGrid_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            DataGridView paramGrid = tabParamGrids[currentTab];
+            if (paramGrid.Columns[e.ColumnIndex].Name == "Value")
+            {
+                string input = e.FormattedValue.ToString();
+                string expectedType = paramGrid.Rows[e.RowIndex].Cells["ParamName"].Value?.ToString();
+
+                // If you're storing type in another column (say Tag or ParamType), fetch it that way
+                string typeHint = adlParameters[currentADLName][e.RowIndex].paramType; // Example
+
+                if (!IsValidInput(input, typeHint))
+                {
+                    MessageBox.Show($"Invalid input for type {typeHint}", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    e.Cancel = true; // Prevent leaving the cell
+                }
+            }
+        }
+
+
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
